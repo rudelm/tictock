@@ -84,11 +84,6 @@ void setup() {
   Serial.begin(9600);
   Wire.begin();
 
-  tmElements_t tm;
-  if (RTC.read(tm)) {
-    Serial.println("Time: ");
-  }
-
   Serial.println("Setting system clock from RTC module");
   setSyncProvider(RTC.get); 
   //DCF.Start();
