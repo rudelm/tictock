@@ -82,32 +82,36 @@ const word_t* MINUTE_WORDS[] = {
 
 void setup() {
   Serial.begin(9600);
+  Wire.begin();
+
+  tmElements_t tm;
+  if (RTC.read(tm)) {
+    Serial.println("Time: ");
+  }
 
   Serial.println("Setting system clock from RTC module");
   setSyncProvider(RTC.get); 
-  DCF.Start();
-  setSyncInterval(30);
-  setSyncProvider(getDCFTime);
+  //DCF.Start();
+  //setSyncInterval(30);
+  //setSyncProvider(getDCFTime);
   // It is also possible to directly use DCF.getTime, but this function gives a bit of feedback
   //setSyncProvider(DCF.getTime);
 
-  Serial.println("Waiting for DCF77 time ... ");
-  Serial.println("It will take at least 2 minutes until a first update can be processed.");
-  while(timeStatus()== timeNotSet) { 
-    // wait until the time is set by the sync provider     
-    Serial.print("RTC: ");
-    digitalClockDisplay();
-    delay(2000);
-  }
+//  Serial.println("Waiting for DCF77 time ... ");
+//  Serial.println("It will take at least 2 minutes until a first update can be processed.");
+//  while(timeStatus()== timeNotSet) { 
+//    // wait until the time is set by the sync provider     
+//    Serial.print("RTC: ");
+//    digitalClockDisplay();
+//    delay(2000);
+//  }
 }
 
 
 void loop()
 {  
-  if( now() != prevDisplay) //update the display only if the time has changed
-  {
-
-  }
+  digitalClockDisplay();
+  delay(1000);
 }
 
 int words(int minutesOfDay, word_t* buffer)
